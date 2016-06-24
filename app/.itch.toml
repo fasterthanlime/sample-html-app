@@ -2,3 +2,11 @@
 name = "play"
 path = "index.html"
 scope = "profile:me"
+
+[[actions]]
+name = "manual"
+path = "hello.txt"
+
+[[actions]]
+name = "forums"
+path = "https://itch.io/community"

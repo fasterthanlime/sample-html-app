@@ -1,13 +1,50 @@
 <html>
-  <head>
-    <script>
+<head>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
     if (typeof Itch !== 'undefined') {
-      document.write('itch api key: ' + Itch.env.ITCHIO_API_KEY.length + ' chars')
+      document.body.innerHTML += ('itch api key: ' + Itch.env.ITCHIO_API_KEY.length + ' chars<br>')
+
+      var xhr = new XMLHttpRequest()
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState !== 4) {
+          return
+        }
+
+        const res = JSON.parse(xhr.responseText)
+        if (res.errors) {
+          document.body.innerHTML += ('<pre>' + res.errors.join(', ') + '</pre>')
+        } else {
+          document.body.innerHTML += ('Authenticated as ' + (res.user.display_name || res.user.username) + ' ')
+          document.body.innerHTML += ('<img src="' + res.user.cover_url + '">')
+        }
+      }
+      xhr.open('GET', 'https://itch.io/api/1/jwt/me')
+      xhr.setRequestHeader('Authorization', Itch.env.ITCHIO_API_KEY)
+      xhr.send()
     } else {
-      document.write('No itch integration')
+      document.body.innerHTML += ('No itch integration')
     }
-    </script>
-  </head>
-  <body>
-  </body>
+  })
+  </script>
+  <style>
+    body {
+      background-color: #1D1C1C;
+      color: #DAD2D2;
+      font-size: 16px;
+      line-height: 1.4;
+      font-family: 'Lato', sans-serif;
+      padding: 15px;
+    }
+
+    body img {
+      display: block;
+      border-radius: 4px;
+      margin: 8px;
+    }
+  </style>
+</head>
+<body>
+</body>
 </html>

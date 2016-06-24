@@ -1,0 +1,2 @@
+If you see this, you're running a version of the app that
+supports manifests somewhat!
