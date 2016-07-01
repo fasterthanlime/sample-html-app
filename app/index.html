@@ -1,6 +1,8 @@
 <html>
 <head>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/styles/hybrid.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/highlight.min.js"></script>
   <script>
   document.addEventListener('DOMContentLoaded', function () {
     if (typeof Itch !== 'undefined') {
@@ -18,6 +20,8 @@
         } else {
           document.body.innerHTML += ('Authenticated as ' + (res.user.display_name || res.user.username) + ' ')
           document.body.innerHTML += ('<img src="' + res.user.cover_url + '">')
+          document.body.innerHTML += ('<pre><code class="javascript">' + JSON.stringify(res.user, 0, 2) + '</code></pre>')
+          hljs.highlightBlock(document.querySelector('pre code'))
         }
       }
       xhr.open('GET', 'https://itch.io/api/1/jwt/me')
@@ -41,7 +45,16 @@
     body img {
       display: block;
       border-radius: 4px;
-      margin: 8px;
+      margin: 8px 0;
+    }
+
+    body pre {
+      background-color: #333;
+      border-radius: 4px;
+      border: 2px solid #fa5c5c;
+      max-width: 800px;
+      overflow-x: auto;
+      font-size: 14px;
     }
   </style>
 </head>
